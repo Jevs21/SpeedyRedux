@@ -19,6 +19,8 @@ function Car() {
         "right": rightImg
     }
 
+    this.score = 0;
+
     this.show = function() {
         image(this.sprite[this.direction_state], this.x, this.y, this.sprite_width, this.sprite_height);
     }
@@ -33,6 +35,21 @@ function Car() {
         if(new_position < (width - this.sprite_width) && new_position > 0){
             this.x += this.direction * this.speed;
         }
-        
+    }
+
+    this.checkCollision = function(gate) {
+        if(this.y == gate.y + gate.sprite_height){
+            let car_left = this.x;
+            let car_right = this.x + this.sprite_width;
+            let inside_left = gate.x + gate.sprite_width;
+            let inside_right = gate.x + gate.gate_width;
+            if(car_left > inside_left && car_right < inside_right ){
+                this.score += 1;
+                console.log("Point!");
+            }
+            else {
+                console.log("Out :(");
+            }
+        }
     }
 }

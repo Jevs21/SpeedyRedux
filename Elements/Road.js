@@ -1,14 +1,21 @@
-function Road() {
+function Road(speed) {
+    this.speed = speed;
+    this.animation = [];
+    this.index = 0;
+
+    this.loadSprites = function() {
+
+        for(let i = 4; i >= 0; i--){
+            this.animation.push(loadImage("Assets/track-0"+i+".png"));
+        }
+    }
+
     this.show = function(){
-        fill(51);
-        rect(0, 0, width, height);
+        let index = floor(this.index) % this.animation.length;
+        image(this.animation[index], 0, 0, width, height);
+    }
 
-        fill(0);
-        rect(width-20, 0, 20, height);
-
-        strokeWeight(4);
-        stroke("red");
-        line(width-20, 20, width, 0);
-
+    this.animate = function(){
+        this.index += this.speed;
     }
 }

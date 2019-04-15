@@ -1,20 +1,31 @@
 var car;
+var road;
+var gate;
 
 function setup() {
     createCanvas(400,600);
-    road = new Road();
+    road = new Road(1);
+    console.log("Loading road sprites");
+    road.loadSprites();
+    console.log("Done loading sprites");
     car = new Car();
-    gate = new Gate();
+    gate = new Gate(3);
 }
 
 function draw() {
 
+    car.checkCollision(gate);
+
+    background(0);
+
     road.show();
+    road.animate();
 
     car.show();
     car.move();
 
     gate.show();
+    gate.move();
 }
 
 function keyReleased(){
