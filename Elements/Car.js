@@ -37,18 +37,25 @@ function Car() {
         }
     }
 
-    this.checkCollision = function(gate) {
+    this.checkCollision = function(gate, game_obj) {
         if(this.y == gate.y + gate.sprite_height){
             let car_left = this.x;
             let car_right = this.x + this.sprite_width;
-            let inside_left = gate.x + gate.sprite_width;
-            let inside_right = gate.x + gate.gate_width;
+            let inside_left = gate.x + Math.floor(gate.sprite_width / 2);
+            let inside_right = gate.x + gate.gate_width + Math.ceil(gate.sprite_width / 2);
+
             if(car_left > inside_left && car_right < inside_right ){
                 this.score += 1;
-                console.log("Point!");
+                console.log("Current score: " + this.score);
+
+                if(this.score > 0 && this.score % 5 == 0){
+                    game_obj.increaseDifficulty();
+                }
+
+                gate.makeInactive();
             }
             else {
-                console.log("Out :(");
+                game_obj.gameOver(this.score);
             }
         }
     }
